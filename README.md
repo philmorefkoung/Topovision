@@ -8,6 +8,7 @@ Our project explores the application of topological methods with deep learning t
 * [Usage](#usage)
 * [Data](#data)
 * [Results](#results)
+* [Model](#model) 
 * [Acknowledgements](#acknowledgements)
 
 
@@ -46,8 +47,13 @@ Due to file size limitations, we cannot provide the dataset or betti vectors in 
 
 ## Results
 
-The specific results of our experiments can be found in our paper. To summarize, topological features enhanced the performance of baseline models accross all classification tasks.
+The specific results of our experiments can be found in our paper. To summarize, topological features often enhance the performance of baseline models accross all classification tasks.
 
+## Model 
+
+The high level architecture of our model can be found below
+
+![Topovision](https://github.com/user-attachments/assets/05abfc27-833a-4afd-aa2e-cc550c204f1d)
 
 
 ## Acknowledgements 
