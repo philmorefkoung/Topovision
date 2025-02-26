@@ -47,7 +47,9 @@ Due to file size limitations, we cannot provide the dataset or betti vectors in 
 
 ## Results
 
-The specific results of our experiments can be found in our paper. To summarize, topological features often enhance the performance of baseline models accross all classification tasks.
+The more detailed results of our experiments can be found in our paper. To summarize, topological features often enhance the performance of baseline models accross all classification tasks.
+
+![performance_plot1](https://github.com/user-attachments/assets/19fbad16-e5fa-408b-bf1c-c0c03fee1a04)
 
 ## Model 
 
