@@ -95,7 +95,7 @@ class ImageNPZPHDataset(Dataset):
         self.images = npz_data['images']  
         
         # Betti Vectors
-        self.PH_data = pd.read_PH(PH_file)
+        self.PH_data = pd.read_csv(PH_file)
         
         # extract betti vectors
         feature_cols = [str(i) for i in range(400)]
