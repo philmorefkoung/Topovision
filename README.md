@@ -19,25 +19,10 @@ Our project explores the application of topological methods with deep learning t
 Please refer to the requirements.txt file to install the dependencies
 
 ## Usage
-Provided below is an example to load the data: <br />
-```
-import numpy as np
-import pandas as pd
+To run each python file, please replace each path with your own. <br />
 
-image_train = np.load('babesia-train.npz')['images'] 
-image_val = np.load('babesia-val.npz')['images'] 
-image_test = np.load('babesia-test.npz')['images'] 
-
-betti_train = pd.read_csv('babesia-betti-train.csv')
-betti_val = pd.read_csv('babesia-betti-val.csv')
-betti_test = pd.read_csv('babesia-betti-test.csv')
-
-labels_train = np.load('babesia-train.npz')['labels']
-labels_val = np.load('babesia-val.npz')['labels']
-labels_test = np.load('babesia-test.npz')['labels']
-```
-Betti vectors should be provided in csv format and 400 dimensional in length with a 'labels' column <br />
-Images should be stored in an npz with an 'images' array 
+Betti vectors should be provided in csv format and 400 dimensional in length with an additional 'labels' column <br />
+Images should be 128x128 and stored in an npz with an 'images' array 
 
 
 
