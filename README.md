@@ -19,7 +19,7 @@ Our project explores the application of topological methods with deep learning t
 Please refer to the requirements.txt file to install the dependencies
 
 ## Usage
-To run each python file, please replace each path with your own. <br />
+To run each python file, please replace the paths to the data with your own. <br />
 
 Betti vectors should be provided in csv format and 400 dimensional in length with an additional 'labels' column <br />
 Images should be 128x128 and stored in an npz with an 'images' array 
