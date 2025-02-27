@@ -1,8 +1,8 @@
 # Libraries
-import cv2
+import cv2 # opencv-python==4.10.0.84
 import numpy as np
 import pandas as pd
-from gtda.homology import CubicalPersistence
+from gtda.homology import CubicalPersistence # giotto-tda==0.6.2
 from gtda.diagrams import BettiCurve
 
 #  Function to compute Betti vectors
