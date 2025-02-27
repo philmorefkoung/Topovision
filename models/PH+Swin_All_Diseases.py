@@ -108,7 +108,7 @@ class ImageNPZphDataset(Dataset):
         self.images = npz_data['images']  # expected: (N, 3, 128, 128)
         
         # ph Vectors data.
-        self.ph_data = pd.read_ph(ph_file)
+        self.ph_data = pd.read_csv(ph_file)
         
         # Extract ph vectors 
         feature_cols = [str(i) for i in range(400)]
