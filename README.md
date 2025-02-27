@@ -16,7 +16,7 @@ Our project explores the application of topological methods with deep learning t
 
 
 ## Installation
-To run each python file, please replace the paths to the data with your own. <br />
+To run each python file in the models folder, please download the environment.yml file and in the python file replace the paths to the data with your own. <br />
 Using conda (tested on version 24.1.2) run the following commands:
 ```
 cd path/to/your/project
