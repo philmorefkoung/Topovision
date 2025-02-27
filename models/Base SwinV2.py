@@ -7,13 +7,9 @@ import timm
 import pandas as pd
 from torchvision import transforms
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import (
-    roc_auc_score, f1_score, confusion_matrix,
-    accuracy_score, average_precision_score
-)
+from sklearn.metrics import roc_auc_score, f1_score, accuracy_score, matthews_corrcoef, balanced_accuracy_score, confusion_matrix
 
 # Dataset
-
 class ImageNPZDataset(Dataset):
     def __init__(self, npz_file, csv_file, transform=None):
 
@@ -135,28 +131,32 @@ if __name__ == '__main__':
     all_preds = np.array(all_preds)
     all_labels = np.array(all_labels)
     all_probs = np.array(all_probs)
+    if(num_classes>2):
+        acc = accuracy_score(all_labels, all_preds)
+        weighted_f1 = f1_score(all_labels, all_preds, average='weighted')
+        mcc = matthews_corrcoef(all_labels, all_preds)
+        balanced_acc = balanced_accuracy_score(all_labels, all_preds)
+        roc_auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
     
-    test_acc = accuracy_score(all_labels, all_preds)
-    
-    test_roc_auc = roc_auc_score(all_labels, all_probs)
-    
-    test_f1 = f1_score(all_labels, all_preds)
-    
-    pr_auc = average_precision_score(all_labels, all_probs)
-    
-    cm = confusion_matrix(all_labels, all_preds)
-
-    tn, fp, fn, tp = cm.ravel()
-
-    sensitivity = tp / (tp + fn) 
-    specificity = tn / (tn + fp) 
-        
-    print(f"Test ROC-AUC    : {test_roc_auc:.4f}")
-    print(f"Test Accuracy   : {test_acc:.4f}")
-    print(f"Sensitivity     : {sensitivity:.4f}")
-    print(f"Specificity     : {specificity:.4f}")
-    print(f"Test F1 Score   : {test_f1:.4f}")
-    print(f"Test PR-AUC     : {pr_auc:.4f}")
+        print(f"\nTest Accuracy: {acc:.4f}")
+        print(f"Test Weighted F1: {weighted_f1:.4f}")
+        print(f"Test MCC: {mcc:.4f}")
+        print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
+        print(f"Test ROC-AUC: {roc_auc:.4f}")
+    else:
+        test_acc = accuracy_score(all_labels, all_preds)
+        test_roc_auc = roc_auc_score(all_labels, all_probs)
+        test_f1 = f1_score(all_labels, all_preds)        
+        cm = confusion_matrix(all_labels, all_preds)
+        tn, fp, fn, tp = cm.ravel()
+        sensitivity = tp / (tp + fn) 
+        specificity = tn / (tn + fp) 
+            
+        print(f"Test ROC-AUC    : {test_roc_auc:.4f}")
+        print(f"Test Accuracy   : {test_acc:.4f}")
+        print(f"Sensitivity     : {sensitivity:.4f}")
+        print(f"Specificity     : {specificity:.4f}")
+        print(f"Test F1 Score   : {test_f1:.4f}")
 
 
     
