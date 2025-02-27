@@ -16,11 +16,16 @@ Our project explores the application of topological methods with deep learning t
 
 
 ## Installation
-Please refer to the requirements.txt file to install the dependencies
+To run each python file, please replace the paths to the data with your own. <br />
+Using conda (tested on version 24.1.2) run the following commands:
+```
+cd path/to/your/project
+conda env create -f environment.yml
+conda activate toporet
+python PH+Swin.py
+```
 
 ## Usage
-To run each python file, please replace the paths to the data with your own. <br />
-
 Betti vectors should be provided in csv format and 400 dimensional in length with an additional 'labels' column <br />
 Images should be 128x128 and stored in an npz with an 'images' array 
 
