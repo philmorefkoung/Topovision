@@ -7,10 +7,9 @@ from torch.utils.data import Dataset, DataLoader
 import timm
 from torchvision import transforms
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score, accuracy_score, f1_score, precision_score, recall_score, average_precision_score, confusion_matrix
+from sklearn.metrics import roc_auc_score, f1_score, accuracy_score, matthews_corrcoef, balanced_accuracy_score, confusion_matrix
 
 # 1. TopoRET
-
 class TopoRET(nn.Module):
     def __init__(self, num_classes, img_feat_dim, embed_dim=96):
         super(TopoRET, self).__init__()
@@ -229,21 +228,28 @@ if __name__ == '__main__':
     all_labels = np.array(all_labels)
     all_preds = np.array(all_preds)
     all_probs = np.array(all_probs)
+    if(num_classes > 2):
+        acc = accuracy_score(all_labels, all_preds)
+        weighted_f1 = f1_score(all_labels, all_preds, average='weighted')
+        mcc = matthews_corrcoef(all_labels, all_preds)
+        balanced_acc = balanced_accuracy_score(all_labels, all_preds)
+        roc_auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
     
-    roc_auc = roc_auc_score(all_labels, all_probs)
-    accuracy = accuracy_score(all_labels, all_preds)
-    f1 = f1_score(all_labels, all_preds)
-    precision = precision_score(all_labels, all_preds)
-    recall = recall_score(all_labels, all_preds)  
-    
-    tn, fp, fn, tp = confusion_matrix(all_labels, all_preds).ravel()
-    specificity = tn / (tn + fp)
-    
-    pr_auc = average_precision_score(all_labels, all_probs)
-    
-    print("Test ROC-AUC: {:.4f}".format(roc_auc))
-    print("Test Accuracy: {:.4f}".format(accuracy))
-    print("Test Sensitivity (Recall): {:.4f}".format(recall))
-    print("Test Specificity: {:.4f}".format(specificity))
-    print("Test F1 Score: {:.4f}".format(f1))
-    print("Test PR-AUC: {:.4f}".format(pr_auc))
+        print(f"\nTest Accuracy: {acc:.4f}")
+        print(f"Test Weighted F1: {weighted_f1:.4f}")
+        print(f"Test MCC: {mcc:.4f}")
+        print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
+        print(f"Test ROC-AUC: {roc_auc:.4f}")
+    else:
+        roc_auc = roc_auc_score(all_labels, all_probs)
+        accuracy = accuracy_score(all_labels, all_preds)
+        tn, fp, fn, tp = confusion_matrix(all_labels, all_preds).ravel() 
+        sensitivity = tp / (tp + fn)
+        specificity = tn / (tn + fp)
+        f1 = f1_score(all_labels, all_preds)  
+        
+        print("Test ROC-AUC: {:.4f}".format(roc_auc))
+        print("Test Accuracy: {:.4f}".format(accuracy))
+        print("Test Sensitivity (Recall): {:.4f}".format(recall))
+        print("Test Specificity: {:.4f}".format(specificity))
+        print("Test F1 Score: {:.4f}".format(f1))
