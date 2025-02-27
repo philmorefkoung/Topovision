@@ -1,9 +1,10 @@
 import pandas as pd
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
-from sklearn.metrics import roc_auc_score, f1_score, accuracy_score, matthews_corrcoef, balanced_accuracy_score
+from sklearn.metrics import roc_auc_score, f1_score, accuracy_score, matthews_corrcoef, balanced_accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
     
@@ -92,14 +93,28 @@ all_preds  = torch.cat(all_preds).numpy()
 all_probs  = torch.cat(all_probs).numpy()      
 
 # compute metrics
-acc = accuracy_score(all_labels, all_preds)
-weighted_f1 = f1_score(all_labels, all_preds, average='weighted')
-mcc = matthews_corrcoef(all_labels, all_preds)
-balanced_acc = balanced_accuracy_score(all_labels, all_preds)
-roc_auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
+if(num_classes > 2):
+    acc = accuracy_score(all_labels, all_preds)
+    weighted_f1 = f1_score(all_labels, all_preds, average='weighted')
+    mcc = matthews_corrcoef(all_labels, all_preds)
+    balanced_acc = balanced_accuracy_score(all_labels, all_preds)
+    roc_auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
 
-print(f"\nTest Accuracy: {acc:.4f}")
-print(f"Test Weighted F1: {weighted_f1:.4f}")
-print(f"Test MCC: {mcc:.4f}")
-print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
-print(f"Test ROC-AUC: {roc_auc:.4f}")
+    print(f"\nTest Accuracy: {acc:.4f}")
+    print(f"Test Weighted F1: {weighted_f1:.4f}")
+    print(f"Test MCC: {mcc:.4f}")
+    print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
+    print(f"Test ROC-AUC: {roc_auc:.4f}")
+else:
+    accuracy = accuracy_score(all_labels, all_preds)
+    roc_auc = roc_auc_score(all_labels, all_probs[:, 1])
+    tn, fp, fn, tp = confusion_matrix(all_labels, all_preds).ravel()
+    sensitivity = tp / (tp + fn)
+    specificity = tn / (tn + fp)
+    f1 = f1_score(all_labels, all_preds)
+    
+    print("Accuracy:", accuracy)
+    print("ROC-AUC:", roc_auc)
+    print("F1 Score:", f1)
+    print("Sensitivity:", sensitivity)
+    print("Specificity:", specificity)
