@@ -27,7 +27,7 @@ Images should be 128x128 and stored in an npz with an 'images' array
 
 
 ## Data
-Due to file size limitations, we cannot provide the dataset or betti vectors in this repository. However, the link to the original dataset can be found below: <br />
+Due to file size limitations, we cannot provide the data in this repository. However, the link to the original dataset can be found below: <br />
 * [Eye Disease Dataset](https://data.mendeley.com/datasets/s9bfhswzjb/1)
 
 ## Results
