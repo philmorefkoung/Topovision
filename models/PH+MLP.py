@@ -7,9 +7,9 @@ from tensorflow.keras.callbacks import LearningRateScheduler
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import (accuracy_score, f1_score, matthews_corrcoef, 
-                             balanced_accuracy_score, roc_auc_score)
+                             balanced_accuracy_score, roc_auc_score, confusion_matrix)
 
-batch_size = 128
+batch_size = 64
 num_classes = 8
 
 data = pd.read_csv('/path/to/betti/vectors')
@@ -73,16 +73,31 @@ pred_labels = np.argmax(pred_probs, axis=1)
 
 true_labels = y_test
 
-# compute metrics 
-acc = accuracy_score(true_labels, pred_labels)
-weighted_f1 = f1_score(true_labels, pred_labels, average='weighted')
-mcc = matthews_corrcoef(true_labels, pred_labels)
-balanced_acc = balanced_accuracy_score(true_labels, pred_labels)
-roc_auc = roc_auc_score(true_labels, pred_probs, multi_class='ovr')
+if(num_classes > 2):
+    # compute metrics 
+    acc = accuracy_score(true_labels, pred_labels)
+    weighted_f1 = f1_score(true_labels, pred_labels, average='weighted')
+    mcc = matthews_corrcoef(true_labels, pred_labels)
+    balanced_acc = balanced_accuracy_score(true_labels, pred_labels)
+    roc_auc = roc_auc_score(true_labels, pred_probs, multi_class='ovr')
 
-print("\nTest Metrics:")
-print(f"Test ROC-AUC:           {roc_auc:.4f}")
-print(f"Test Accuracy:          {acc:.4f}")
-print(f"Test Weighted F1:       {weighted_f1:.4f}")
-print(f"Test MCC:               {mcc:.4f}")
-print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
+    print("\nTest Metrics:")
+    print(f"Test ROC-AUC:           {roc_auc:.4f}")
+    print(f"Test Accuracy:          {acc:.4f}")
+    print(f"Test Weighted F1:       {weighted_f1:.4f}")
+    print(f"Test MCC:               {mcc:.4f}")
+    print(f"Test Balanced Accuracy: {balanced_acc:.4f}")
+else:
+    accuracy = accuracy_score(true_labels, pred_labels)
+    roc_auc = roc_auc_score(true_labels, pred_probs[:, 1])
+    tn, fp, fn, tp = confusion_matrix(true_labels, pred_labels).ravel()
+    sensitivity = tp / (tp + fn)
+    specificity = tn / (tn + fp)
+    f1 = f1_score(true_labels, pred_labels)
+
+    print("Accuracy:", accuracy)
+    print("ROC-AUC:", roc_auc)
+    print("Sensitivity:", sensitivity)
+    print("Specificity:", specificity)
+    print("F1 Score:", f1)
+    
