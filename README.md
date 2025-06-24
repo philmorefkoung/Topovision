@@ -34,7 +34,8 @@ Images should be 128x128 and stored in an npz with an 'images' array
 ## Data
 Due to file size limitations, we cannot provide the data in this repository. However, the link to the original dataset can be found below: <br />
 * [Eye Disease Dataset](https://data.mendeley.com/datasets/s9bfhswzjb/1)
-
+* [IDRiD](https://ieee-dataport.org/open-access/indian-diabetic-retinopathy-image-dataset-idrid)
+* [ORIGA](https://pubmed.ncbi.nlm.nih.gov/21095735/)
 ## Results
 
 The more detailed results of our experiments can be found in our paper. To summarize, topological features often enhance the performance of baseline models accross all classification tasks.
